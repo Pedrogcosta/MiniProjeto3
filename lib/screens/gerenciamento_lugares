@@ -1,0 +1,38 @@
+import 'package:f05_lugares_app/main.dart';
+import 'package:f05_lugares_app/model/lugar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class TelaDeLugares extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final lugarController = Provider.of<LugarController>(context);
+    final listaLugares = lugarController.listaLugares;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gerenciamento de Lugares'),
+      ),
+      body: ListView.builder(
+        itemCount: listaLugares.length,
+        itemBuilder: (context, index) {
+          final lugar = listaLugares[index];
+
+          return ListTile(
+            title: Text(lugar.titulo),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Avaliação: ${lugar.avaliacao}'), 
+                Text('Custo médio: ${lugar.custoMedio}'), 
+              ],
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/detalheLugar', arguments: lugar);
+            },
+          );
+        },
+      ),
+    );
+  }
+}
